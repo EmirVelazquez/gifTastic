@@ -56,31 +56,31 @@ $(document).ready(function () {
         var myApi = "3u7HQLGRJoAsC5pVcaCb93cYkBN01PM8";
         //This is the queryURL we are using, in this case it is GHIPY API, I set a limit of 10 requested Gifs
         var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + myApi + "&q=" + userRequest + "&limit=10";
+
+        //This line will clear the gifDisplay container each time user clicks new button to request gifs
+        $("#gifDisplay").empty();
+
         //This is the ajax call to the queryURL, will get data from GIPHY API
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
-            //Test, logs the first out of ten gif URL with fixed height
-            console.log(response.data[0].images.fixed_height.url);
-            //Test, logs the rating of the first gif out of ten 
-            console.log(response.data[0].rating);
-            //This line places the first out of ten gifs inside a local variable
-            var gifUrl = response.data[0].images.fixed_height.url;
-            //This line will make a new image element to hold the gif
-            var gifContainer = $("<img>").attr("src", gifUrl);
-            //This line will append inside of the HTML container id gifDisplay
-            $("#gifDisplay").append(gifContainer);
-
+            //This for loop will execute for the length of the data requested from GHIPY API which was limited to 10
+            for (var i = 0; i < response.data.length; i++) {
+                //This line will make a new local variable to hold the new figcaption element that holds the rating
+                var ratingContainer = $("<figcaption>Rating: " + response.data[i].rating + "</figcaption>");
+                //This line will display the rating after the gif
+                $("#gifDisplay").append(ratingContainer);
+                //This line places the first out of ten gifs inside a local variable
+                var gifUrl = response.data[i].images.fixed_height.url;
+                //This line will make a local variable to hold the new image element that holds the gif
+                var gifContainer = $("<img>").attr("src", gifUrl);
+                //This line will append inside of the HTML container id gifDisplay
+                $("#gifDisplay").append(gifContainer);
+                // emptyGifContainer();
+            }
         });
-
-
-
-
-
     }
-
 
     //Need to make a function that will pause and play the gif after the user clicks on it
 
@@ -98,10 +98,6 @@ $(document).ready(function () {
 
     //This click event listener is for all elements with the ID 'buttonId', will work for dynamically generated elements
     $(document).on("click", "#buttonId", displayButtonGifs);
-
-    //Testing
-    // console.log(buttonArray);
-
 
 
 
