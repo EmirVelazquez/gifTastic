@@ -1,3 +1,7 @@
 .navbar {
     justify-content: space-evenly;
 }
+
+#submitText {
+    margin-top: 4px;
+}

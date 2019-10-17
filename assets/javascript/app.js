@@ -1,28 +1,10 @@
-//Master function that will execute only after the DOM has loaded
+/*Master function that will execute only after the DOM has loaded */
 $(document).ready(function () {
     //Global Variables
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    //This array holds the original buttons
+    //This array holds the original buttons displayed when DOM loads
     var buttonArray = ["puppy", "kitty", "parrot", "eagle", "lion", "wolf", "elephant", "badger", "racoon", "shark"];
-    //This variable will hold the button clicked to request the gifs from GIPHY API
-    var userSearch = "racoon";
-    //This is my API key from GHIPY Developers
-    var myApi = "3u7HQLGRJoAsC5pVcaCb93cYkBN01PM8";
-    //This is the queryURL we are using, in this case it is GHIPY API
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + myApi + "&q=" + userSearch + "&limit=10";
-
-    //This is the ajax call to the queryURL, will get data from GIPHY API
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function (response) {
-        console.log(response);
-        console.log(response.data[0].url);
-
-    });
-
-
 
     //Functions
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,7 +33,6 @@ $(document).ready(function () {
 
 
     //This event handler takes the users input on the text bar and puts it into the buttonArray, calls the populateButtons function
-    // function submitSearch() {
     $("#submitText").on("click", function (event) {
         //This line prevents the user from trying to submit the form, user can hit enter on keyboard or click button
         event.preventDefault();
@@ -65,17 +46,41 @@ $(document).ready(function () {
         populateButtons();
         console.log(buttonArray);
     });
-    // }
 
-    //This function will capture the button name from the data-attribute(button-name) added to the buttons
-    function buttonName() {
-        //This line is  making a local var buttonName and placing the button name inside of said variable
-        var buttonName = $(this).attr("button-name");
-        //This is a temporary test, will console log the button name as a string with JSON.stringify method
-        console.log(JSON.stringify(buttonName));
+    /*This function will capture the button name from the data-attribute(button-name) added to the buttons
+    then pull Data from GHIPY API and display it on the DOM*/
+    function displayButtonGifs() {
+        //This line is making a local var userRequest and placing the button name inside of said variable
+        var userRequest = $(this).attr("button-name");
+        //This is my API key from GHIPY Developers
+        var myApi = "3u7HQLGRJoAsC5pVcaCb93cYkBN01PM8";
+        //This is the queryURL we are using, in this case it is GHIPY API, I set a limit of 10 requested Gifs
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=" + myApi + "&q=" + userRequest + "&limit=10";
+        //This is the ajax call to the queryURL, will get data from GIPHY API
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+            //Test, logs the first out of ten gif URL with fixed height
+            console.log(response.data[0].images.fixed_height.url);
+            //Test, logs the rating of the first gif out of ten 
+            console.log(response.data[0].rating);
+            //This line places the first out of ten gifs inside a local variable
+            var gifUrl = response.data[0].images.fixed_height.url;
+            //This line will make a new image element to hold the gif
+            var gifContainer = $("<img>").attr("src", gifUrl);
+            //This line will append inside of the HTML container id gifDisplay
+            $("#gifDisplay").append(gifContainer);
+
+        });
+
+
+
+
+
     }
 
-    //Need to make a function that will display the gifs when the user clicks the button
 
     //Need to make a function that will pause and play the gif after the user clicks on it
 
@@ -92,13 +97,7 @@ $(document).ready(function () {
     populateButtons();
 
     //This click event listener is for all elements with the ID 'buttonId', will work for dynamically generated elements
-    $(document).on("click", "#buttonId", buttonName);
-
-    //This will call the submitSearch function
-    // submitSearch();
-
-    // //This will call the buttonName function
-    // buttonName();
+    $(document).on("click", "#buttonId", displayButtonGifs);
 
     //Testing
     // console.log(buttonArray);
