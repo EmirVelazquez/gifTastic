@@ -1,7 +1,109 @@
+/* This keeps the footer at the bottom*/
+* {
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    position: relative;
+}
+
+.backGround {
+    background-color: #000000;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 3.0rem;
+    overflow: hidden;
+    display: block;
+}
+
+.container {
+    background-color: hsl(58, 1%, 40%);
+    min-height: 100vh; /* will cover the 100% of viewport */
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 100px; /* height of your footer*/
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 1%;
+    border: 2px solid #ffc107;
+
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 3.0rem;
+    background-color: #343a40;
+    border-top: 2px solid #ffc107;
+    text-align: center;
+}
+                                                                                
+#footerAnchor {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+/*Custom CSS Changes here*/
 .navbar {
     justify-content: space-evenly;
 }
 
 img {
+    border-top-left-radius: 4%;
+    border-top-right-radius: 4%;
+}
+
+#gifDisplay {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.card{
+    margin: 2px 0 2px 0;
     border-radius: 5%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffc107;
+    background-color: #343a40;
+    color: #ffc107;
+    text-align: center;
+}
+
+body {
+    color: #ffffff;
+}
+
+#textBar {
+    margin-bottom: 3px;
+}
+
+#submitText {
+    margin-bottom: 3px;
+}
+
+#submitText:hover {
+    background-color: #343a40;
+    color: #ffc107;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Google font changes */
+
+body {
+    font-family: 'Nunito', sans-serif;
 }

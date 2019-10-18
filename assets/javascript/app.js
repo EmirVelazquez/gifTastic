@@ -67,17 +67,22 @@ $(document).ready(function () {
         }).then(function (response) {
             //This for loop will execute for the length of the data requested from GHIPY API which was limited to 10
             for (var i = 0; i < response.data.length; i++) {
-                //This line will make a new local variable to hold the new figcaption element that holds the rating
-                var ratingContainer = $("<figcaption>Rating: " + response.data[i].rating + "</figcaption>");
-                //This line will display the rating after the gif
-                $("#gifDisplay").append(ratingContainer);
-                //This line places the first out of ten gifs inside a local variable
+                //This line makes variable to place div inside (this will hold gif and rating)
+                var gifCard = $("<div>");
+                //This line give the div a class= "card"
+                gifCard.addClass("card");
+                //This line places card inside container holding gifs
+                $("#gifDisplay").append(gifCard);
+                //This line places the gif inside a local variable
                 var gifUrl = response.data[i].images.fixed_height.url;
                 //This line will make a local variable to hold the new image element that holds the gif
                 var gifContainer = $("<img>").attr("src", gifUrl);
-                //This line will append inside of the HTML container id gifDisplay
-                $("#gifDisplay").append(gifContainer);
-                // emptyGifContainer();
+                //This line will append the gif inside the card       
+                gifCard.append(gifContainer);
+                //This line will make a new local variable to hold the new figcaption element that holds the rating
+                var ratingContainer = $("<figcaption>Rating: " + response.data[i].rating.toUpperCase() + "</figcaption>");
+                //This line will display the rating after the gif
+                gifCard.append(ratingContainer);
             }
         });
     }
