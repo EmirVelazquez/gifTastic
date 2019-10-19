@@ -44,7 +44,6 @@ $(document).ready(function () {
         $("#textBar").val("");
         //This line will call the populateButtons function to display the new button added
         populateButtons();
-        console.log(buttonArray);
     });
 
     /*This function will capture the button name from the data-attribute(button-name) added to the buttons
@@ -60,6 +59,8 @@ $(document).ready(function () {
         //This line will clear the gifDisplay container each time user clicks new button to request gifs
         $("#gifDisplay").empty();
 
+
+
         //This is the ajax call to the queryURL, will get data from GIPHY API
         $.ajax({
             url: queryURL,
@@ -68,28 +69,32 @@ $(document).ready(function () {
             //This for loop will execute for the length of the data requested from GHIPY API which was limited to 10
             for (var i = 0; i < response.data.length; i++) {
                 //This line makes variable to place div inside (this will hold gif and rating)
-                var gifCard = $("<div>");
+                gifCard = $("<div>");
                 //This line give the div a class= "card"
                 gifCard.addClass("card");
                 //This line places card inside container holding gifs
                 $("#gifDisplay").append(gifCard);
-                //This line places the gif inside a local variable
-                var gifUrl = response.data[i].images.fixed_height.url;
-                //This line will make a local variable to hold the new image element that holds the gif
-                var gifContainer = $("<img>").attr("src", gifUrl);
+                //This line places the gif inside a local variable (still Gif)
+                gifStill = response.data[i].images.fixed_height_still.url;
+                //This line places the gif inside a local variable (animated Gif)
+                gifAnimated = response.data[i].images.fixed_height.url;
+                //This line will make a local variable to hold the new image element that holds the gif (added class gifStill)
+                gifContainer = $("<img>").attr("src", gifStill).addClass("gif").attr("data-state", "still");
                 //This line will append the gif inside the card       
                 gifCard.append(gifContainer);
                 //This line will make a new local variable to hold the new figcaption element that holds the rating
-                var ratingContainer = $("<figcaption>Rating: " + response.data[i].rating.toUpperCase() + "</figcaption>");
+                ratingContainer = $("<figcaption>Rating: " + response.data[i].rating.toUpperCase() + "</figcaption>");
                 //This line will display the rating after the gif
                 gifCard.append(ratingContainer);
-            }
+                //Test
+                console.log(gifContainer);
+            };
+            //Need to make a function that will pause and play the gif after the user clicks on it
+            $(".gif").on("click", function () {
+                console.log("You clicked a gif");
+            });
         });
     }
-
-    //Need to make a function that will pause and play the gif after the user clicks on it
-
-
 
 
 

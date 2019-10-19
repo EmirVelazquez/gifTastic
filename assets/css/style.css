@@ -55,6 +55,7 @@ body {
 }
 
 /*Custom CSS Changes here*/
+
 .navbar {
     justify-content: space-evenly;
 }
@@ -100,6 +101,14 @@ body {
 
 h1 {
     text-align: center;
+}
+
+#buttonId {
+    margin-top: 3px;
+}
+
+.card {
+    color: #ffffff;
 }
 
 /* Google font changes */
