@@ -78,8 +78,8 @@ $(document).ready(function () {
                 gifStill = response.data[i].images.fixed_height_still.url;
                 //This line places the gif inside a local variable (animated Gif)
                 gifAnimated = response.data[i].images.fixed_height.url;
-                //This line will make a local variable to hold the new image element that holds the gif (added class gifStill)
-                gifContainer = $("<img>").attr("src", gifStill).addClass("gif").attr("data-state", "still");
+                //This line will make a local variable to hold the new image element that holds the displayed gifStill, data-state, data-still, data-animate
+                gifContainer = $("<img>").attr("src", gifStill).addClass("gif").attr("data-state", "still").attr("data-still", gifStill).attr("data-animate", gifAnimated);
                 //This line will append the gif inside the card       
                 gifCard.append(gifContainer);
                 //This line will make a new local variable to hold the new figcaption element that holds the rating
@@ -89,9 +89,23 @@ $(document).ready(function () {
                 //Test
                 console.log(gifContainer);
             };
-            //Need to make a function that will pause and play the gif after the user clicks on it
+            //This on click event handler replaces data-still displayed gif to data-animate when user clicks on gif(similar to pause and play)
             $(".gif").on("click", function () {
-                console.log("You clicked a gif");
+                //This line makes a variable called state that holds the current data-state the gif has when it is clicked
+                var state = $(this).attr("data-state");
+                //This if statement says that if data-state inside of state variable is equal to "still" then run this code block
+                if (state === "still") {
+                    //Gets the source url gif and swaps it to the data-animate gif
+                    $(this).attr("src", $(this).attr("data-animate"));
+                    //This sets the data-state to animate, code block ends
+                    $(this).attr("data-state", "animate");
+                    //If state !== "still" then this code block runs
+                } else {
+                    //Gets the source url gif and swaps it to the data-still gif
+                    $(this).attr("src", $(this).attr("data-still"));
+                    //This sets the data-state to still, code block ends
+                    $(this).attr("data-state", "still");
+                }
             });
         });
     }
